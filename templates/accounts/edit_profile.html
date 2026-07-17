@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<main style="background:#fff; border-radius:12px; padding:40px; max-width:450px;">
+    <h2 style="margin-bottom:24px;">프로필 수정</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div style="margin-bottom:16px;">
+            <label style="font-size:13px; color:#666;">이름</label><br>
+            <input type="text" name="name" value="{{ user.first_name }}" required style="width:100%; padding:10px; border:1px solid #E2E5EC; border-radius:6px; margin-top:4px;">
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <label style="font-size:13px; color:#666;">학번</label><br>
+            <input type="text" name="student_id" value="{{ user.profile.student_id }}" required style="width:100%; padding:10px; border:1px solid #E2E5EC; border-radius:6px; margin-top:4px;">
+        </div>
+
+        <div style="margin-bottom:24px;">
+            <label style="font-size:13px; color:#666;">이메일</label><br>
+            <input type="email" name="email" value="{{ user.email }}" required style="width:100%; padding:10px; border:1px solid #E2E5EC; border-radius:6px; margin-top:4px;">
+        </div>
+
+        <button type="submit" style="background:#101B3D; color:#fff; padding:12px 24px; border:none; border-radius:6px; font-weight:700; width:100%;">저장하기</button>
+    </form>
+</main>
+{% endblock %}

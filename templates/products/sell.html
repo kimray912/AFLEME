@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="sell-wrapper">
+    <h2>상품 등록</h2>
+    <p class="sell-desc">정확한 정보를 입력할수록 빠르게 거래할 수 있어요!</p>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="sell-field">
+            <label>상품 사진</label>
+            <div class="sell-photo-row">
+                <label class="sell-photo-box" id="photo-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="photo-icon"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13" r="3.5"/></svg>
+                    <span id="photo-label">사진 추가</span>
+                    <img id="photo-preview" style="display:none; width:100%; height:100%; object-fit:cover; position:absolute; inset:0;">
+                    {{ form.image }}
+                </label>
+            </div>
+        </div>
+
+        <div class="sell-field">
+            <label>상품명 <span class="count" id="title-count">0 / 40</span></label>
+            {{ form.title }}
+        </div>
+
+        <div class="sell-field">
+            <label>카테고리</label>
+            {{ form.category }}
+        </div>
+
+        <div class="sell-field">
+            <label>가격</label>
+            <div class="sell-price-box">
+                <span>₩</span>
+                {{ form.price }}
+                <span class="unit">원</span>
+            </div>
+        </div>
+
+        <div class="sell-field">
+            <label>상품 설명 <span class="count" id="desc-count">0 / 500</span></label>
+            {{ form.description }}
+        </div>
+
+        <div class="sell-buttons">
+            <button type="submit" class="sell-submit">상품 등록하기</button>
+            <a href="{% url 'home' %}" class="sell-cancel">취소</a>
+        </div>
+    </form>
+</main>
+
+<script>
+    const titleInput = document.getElementById('id_title');
+    const titleCount = document.getElementById('title-count');
+    if (titleInput && titleCount) {
+        titleCount.textContent = titleInput.value.length + ' / 40';
+        titleInput.addEventListener('input', () => {
+            titleCount.textContent = titleInput.value.length + ' / 40';
+        });
+    }
+
+    const descInput = document.querySelector('.form-textarea');
+    const descCount = document.getElementById('desc-count');
+    if (descInput && descCount) {
+        descCount.textContent = descInput.value.length + ' / 500';
+        descInput.addEventListener('input', () => {
+            descCount.textContent = descInput.value.length + ' / 500';
+        });
+    }
+
+    const imageInput = document.getElementById('id_image_input');
+    const photoLabel = document.getElementById('photo-label');
+    const photoIcon = document.getElementById('photo-icon');
+    const photoPreview = document.getElementById('photo-preview');
+
+    if (imageInput) {
+        imageInput.addEventListener('change', () => {
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photoPreview.src = e.target.result;
+                    photoPreview.style.display = 'block';
+                    photoLabel.style.display = 'none';
+                    photoIcon.style.display = 'none';
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            }
+        });
+    }
+</script>
+{% endblock %}

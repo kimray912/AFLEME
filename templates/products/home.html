@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main>
+    <div class="banner">
+        <div>
+            <div class="brand">AFLEME</div>
+            <div class="brand-en">AFLEME</div>
+            <div class="title">안양외고 학생 인증 마켓</div>
+            <div class="desc">우리 학교 학생들만의 안전한 거래 문화</div>
+        </div>
+    </div>
+
+    <div class="section-title">카테고리 바로가기</div>
+    <div class="category-grid">
+    {% for cat in categories %}
+    <a href="{% url 'category' cat.name %}" class="category-item">
+         {% if cat.name == "의류" %}
+        <img src="{% static 'icons/의류.jpg' %}" style="width:32px; height:32px;">
+    {% elif cat.name == "문구, 학용품" %}
+        <img src="{% static 'icons/문구, 학용품.jpg' %}" style="width:32px; height:32px;">
+    {% elif cat.name == "생활용품" %}
+        <img src="{% static 'icons/생활용품.jpg' %}" style="width:32px; height:32px;">
+    {% elif cat.name == "악세사리" %}
+        <img src="{% static 'icons/악세사리.jpg' %}" style="width:32px; height:32px;">
+    {% elif cat.name == "도서" %}
+        <img src="{% static 'icons/도서.jpg' %}" style="width:32px; height:32px;">
+    {% elif cat.name == "잡화" %}
+        <img src="{% static 'icons/잡화.jpg' %}" style="width:32px; height:32px;">
+    {% else %}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>
+        {% endif %}
+        {{ cat.name }}
+    </a>
+    {% endfor %}
+</div>
+
+    <div class="section-title">
+    {% if search_query %}
+        "{{ search_query }}" 검색 결과
+    {% else %}
+        최근에 올라온 상품
+    {% endif %}
+</div>
+<div class="product-grid">
+        {% for product in products %}
+        <a href="{% url 'product_detail' product.id %}" class="product-card">
+            <div class="thumb">
+                {% if product.category.name == "의류" %}
+                    <span class="badge" style="background:#16234A;">{{ product.category.name }}</span>
+                {% elif product.category.name == "문구, 학용품" %}
+                    <span class="badge" style="background:#6C4EA0;">{{ product.category.name }}</span>
+                {% elif product.category.name == "생활용품" %}
+                    <span class="badge" style="background:#4B4B4B;">{{ product.category.name }}</span>
+                {% elif product.category.name == "악세사리" %}
+                    <span class="badge" style="background:#B0473B;">{{ product.category.name }}</span>
+                {% elif product.category.name == "도서" %}
+                    <span class="badge" style="background:#1F6F63;">{{ product.category.name }}</span>
+                {% elif product.category.name == "잡화" %}
+                    <span class="badge" style="background:#3E8E4F;">{{ product.category.name }}</span>
+                {% else %}
+                    <span class="badge" style="background:#888;">{{ product.category.name }}</span>
+                {% endif %}
+                {% if product.is_sold %}
+                <span style="position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.7); color:#fff; font-size:11px; font-weight:700; padding:3px 8px; border-radius:4px;">거래완료</span>
+                {% endif %}
+                {% if product.image %}<img src="{{ product.image.url }}">{% endif %}
+            </div>
+            <div class="info">
+                <div class="title">{{ product.title }}</div>
+                <div class="price">₩ {{ product.price }}</div>
+                <div class="view-count">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                    {{ product.view_count }}
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</main>
+
+<aside class="right-panel">
+    <div class="profile-card">
+    <div class="avatar"></div>
+    <div>
+        {% if user.is_authenticated %}
+            <div class="name">{{ user.username }} <span class="verified">학생 인증</span></div>
+            <div class="stats">구매 {{ purchase_count }} · 판매 {{ sale_count }}</div>
+        {% else %}
+            <div class="name"><a href="{% url 'login' %}">로그인</a> / <a href="{% url 'signup' %}">회원가입</a></div>
+        {% endif %}
+    </div>
+    <a href="{% url 'mypage' %}" class="arrow" style="text-decoration:none;">›</a>
+</div>
+
+    <div class="notif-card">
+    <div class="head"><h3>알림</h3><a href="{% url 'notification_list' %}">전체보기 ›</a></div>
+    {% for n in recent_notifications %}
+    <div class="notif-item">
+        {% if n.notification_type == 'trade' %}
+            <div class="icon icon-success">✓</div>
+            <div>
+                <div class="title">거래 성사!</div>
+                <div class="desc">{{ n.message }}</div>
+            </div>
+        {% else %}
+            <div class="icon icon-info">🔔</div>
+            <div>
+                <div class="title">입고 알림</div>
+                <div class="desc">{{ n.message }}</div>
+            </div>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p style="color:#999; font-size:13px;">모든 알림을 확인했습니다.</p>
+    {% endfor %}
+</div>
+</aside>
+{% endblock %}

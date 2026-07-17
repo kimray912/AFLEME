@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-left">
+        <div class="brand">AFLEME</div>
+        <div class="sub">안양외고 학생 전용 리셀 플랫폼</div>
+    </div>
+    <div class="auth-right">
+        <h2>로그인</h2>
+        <p class="desc">AFLEME에 오신 것을 환영합니다.</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="auth-error">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="auth-field">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input type="text" name="username" placeholder="아이디 또는 이메일" required>
+            </div>
+            <div class="auth-field">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="password" name="password" placeholder="비밀번호" required>
+            </div>
+            <button type="submit" class="auth-submit">로그인</button>
+        </form>
+
+        <p class="auth-bottom">계정이 없으신가요? <a href="{% url 'signup' %}">회원가입</a></p>
+    </div>
+</div>
+{% endblock %}

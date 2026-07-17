@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="detail-wrapper">
+    <div class="detail-image">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" id="detail-main-img" onclick="openImgModal('{{ product.image.url }}')">
+        {% endif %}
+    </div>
+
+    <div class="detail-info">
+        <div class="detail-badges">
+            {% if product.category.name == "의류" %}
+                <span class="detail-badge" style="background:#16234A;">{{ product.category.name }}</span>
+            {% elif product.category.name == "문구, 학용품" %}
+                <span class="detail-badge" style="background:#6C4EA0;">{{ product.category.name }}</span>
+            {% elif product.category.name == "생활용품" %}
+                <span class="detail-badge" style="background:#4B4B4B;">{{ product.category.name }}</span>
+            {% elif product.category.name == "악세사리" %}
+                <span class="detail-badge" style="background:#B0473B;">{{ product.category.name }}</span>
+            {% elif product.category.name == "도서" %}
+                <span class="detail-badge" style="background:#1F6F63;">{{ product.category.name }}</span>
+            {% elif product.category.name == "잡화" %}
+                <span class="detail-badge" style="background:#3E8E4F;">{{ product.category.name }}</span>
+            {% else %}
+                <span class="detail-badge" style="background:#888;">{{ product.category.name }}</span>
+            {% endif %}
+
+            {% if product.is_sold %}
+            <span class="detail-badge detail-badge-sold">거래완료</span>
+            {% endif %}
+        </div>
+
+        <div class="detail-title">{{ product.title }}</div>
+        <div class="detail-seller">판매자 {{ product.seller.username }}</div>
+        <div class="view-count" style="margin-bottom:20px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            조회 {{ product.view_count }}
+        </div>
+
+        <div class="detail-section-label">상품 설명</div>
+        <div class="detail-desc">{{ product.description }}</div>
+
+        <div class="detail-actions">
+            {% if product.is_sold %}
+                <button class="detail-btn-sold" disabled>거래완료된 상품입니다</button>
+            {% elif product.seller == user %}
+                <a href="{% url 'edit_product' product.id %}" class="detail-btn-edit">수정하기</a>
+            {% else %}
+                <form method="post" action="{% url 'buy_product' product.id %}" style="flex:1;">
+                    {% csrf_token %}
+                    <button type="submit" class="detail-btn-buy">구매하기</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</main>
+
+<div class="img-modal" id="imgModal">
+    <button class="img-modal-close" onclick="closeImgModal()">×</button>
+    <img id="modalImg" src="">
+    <div class="img-modal-controls">
+        <button onclick="zoomOut()">−</button>
+        <button onclick="resetZoom()">⟲</button>
+        <button onclick="zoomIn()">+</button>
+    </div>
+</div>
+
+<script>
+    let zoomLevel = 1;
+
+    function openImgModal(src) {
+        document.getElementById('modalImg').src = src;
+        document.getElementById('imgModal').classList.add('active');
+        zoomLevel = 1;
+        document.getElementById('modalImg').style.transform = 'scale(1)';
+    }
+    function closeImgModal() {
+        document.getElementById('imgModal').classList.remove('active');
+    }
+    function zoomIn() {
+        zoomLevel = Math.min(zoomLevel + 0.3, 3);
+        document.getElementById('modalImg').style.transform = `scale(${zoomLevel})`;
+    }
+    function zoomOut() {
+        zoomLevel = Math.max(zoomLevel - 0.3, 1);
+        document.getElementById('modalImg').style.transform = `scale(${zoomLevel})`;
+    }
+    function resetZoom() {
+        zoomLevel = 1;
+        document.getElementById('modalImg').style.transform = 'scale(1)';
+    }
+
+    document.getElementById('imgModal').addEventListener('click', function(e) {
+        if (e.target === this) closeImgModal();
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<main style="background:#fff; border-radius:12px; padding:32px; flex:1;">
+
+    <div style="display:flex; gap:20px; align-items:center; margin-bottom:24px;">
+        <div style="width:64px; height:64px; border-radius:50%; background:#D9D9D9; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <img src="{% static 'icons/icons8-person-30.png' %}" style="width:40px; height:40px;">
+        </div>
+        <div>
+            <div style="font-size:18px; font-weight:700; display:flex; align-items:center; gap:8px;">
+                {{ user.first_name }}
+                <span style="background:#E6F1FB; color:#185FA5; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">학생 인증</span>
+                <span style="font-weight:900; font-size:15px;">{{ user.username }}</span>
+            </div>
+            <div style="font-size:13px; color:#888; margin-top:4px;">
+                {{ user.profile.student_id }}
+            </div>
+            <a href="{% url 'edit_profile' %}" style="display:inline-block; margin-top:10px; font-size:12px; border:1px solid #ddd; padding:6px 14px; border-radius:6px; color:#333; text-decoration:none;">프로필 수정</a>
+        </div>
+    </div>
+
+    <div style="display:flex; border:1px solid #eee; border-radius:10px; padding:20px; margin-bottom:28px;">
+        <div style="flex:1; text-align:center;">
+            <div style="font-size:13px; color:#888; margin-bottom:6px;">판매 중인 상품</div>
+            <div style="font-size:22px; font-weight:700; color:#2F5FDB;">{{ selling_count }}</div>
+        </div>
+        <div style="flex:1; text-align:center; border-left:1px solid #eee;">
+            <div style="font-size:13px; color:#888; margin-bottom:6px;">판매 완료</div>
+            <div style="font-size:22px; font-weight:700; color:#3E8E4F;">{{ sold_count }}</div>
+        </div>
+        <div style="flex:1; text-align:center; border-left:1px solid #eee;">
+            <div style="font-size:13px; color:#888; margin-bottom:6px;">구매한 상품</div>
+            <div style="font-size:22px; font-weight:700; color:#101B3D;">{{ purchased_count }}</div>
+        </div>
+    </div>
+
+    <div style="display:flex; gap:24px; border-bottom:1px solid #eee; margin-bottom:20px; font-size:14px;">
+        <a href="{% url 'mypage' %}?tab=selling" style="text-decoration:none; padding-bottom:12px; {% if tab == 'selling' %}color:#101B3D; font-weight:700; border-bottom:2px solid #101B3D;{% else %}color:#888;{% endif %}">판매 중인 상품</a>
+        <a href="{% url 'mypage' %}?tab=sold" style="text-decoration:none; padding-bottom:12px; {% if tab == 'sold' %}color:#101B3D; font-weight:700; border-bottom:2px solid #101B3D;{% else %}color:#888;{% endif %}">판매 완료한 상품</a>
+        <a href="{% url 'mypage' %}?tab=purchased" style="text-decoration:none; padding-bottom:12px; {% if tab == 'purchased' %}color:#101B3D; font-weight:700; border-bottom:2px solid #101B3D;{% else %}color:#888;{% endif %}">구매한 상품</a>
+    </div>
+
+    {% for product in products %}
+<div style="display:flex; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid #f5f5f5;">
+    <a href="{% url 'product_detail' product.id %}" style="display:flex; align-items:center; gap:16px; flex:1; text-decoration:none; color:inherit;">
+        <div style="width:64px; height:64px; border-radius:8px; overflow:hidden; background:#eee; flex-shrink:0;">
+            {% if product.image %}<img src="{{ product.image.url }}" style="width:100%; height:100%; object-fit:cover;">{% endif %}
+        </div>
+        <div style="flex:1;">
+            <div style="font-weight:700; font-size:14px;">{{ product.title }}</div>
+            <div style="font-size:12px; color:#888; margin-top:2px;">{{ product.category.name }}</div>
+        </div>
+        <div style="font-weight:700; font-size:15px;">₩ {{ product.price }}</div>
+        {% if product.is_sold %}
+        <span style="font-size:11px; font-weight:700; color:#fff; background:#999; padding:3px 8px; border-radius:4px;">거래완료</span>
+        {% endif %}
+    </a>
+    {% if product.seller == user %}
+    <a href="{% url 'edit_product' product.id %}" style="font-size:12px; border:1px solid #ddd; padding:6px 14px; border-radius:6px; color:#333; text-decoration:none; margin-left:12px; white-space:nowrap;">수정하기</a>
+    {% endif %}
+</div>
+{% empty %}
+<p style="color:#999; padding:20px 0;">상품이 없습니다.</p>
+{% endfor %}
+
+</main>
+{% endblock %}
