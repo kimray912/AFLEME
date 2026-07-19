@@ -121,3 +121,16 @@ def edit_product_view(request, product_id):
         form = ProductForm(instance=product)
 
     return render(request, 'products/edit.html', {'form': form, 'product': product})
+
+@login_required
+def delete_product_view(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    if product.seller != request.user and not request.user.is_staff:
+        return redirect('product_detail', product_id=product.id)
+
+    if request.method == 'POST':
+        product.delete()
+        return redirect('home')
+
+    return redirect('product_detail', product_id=product.id)

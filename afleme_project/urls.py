@@ -15,5 +15,5 @@ urlpatterns = [
     path('notifications/', include('notifications.urls')),
     path('product/<int:product_id>/buy/', views.buy_view, name='buy_product'),
     path('product/<int:product_id>/edit/', views.edit_product_view, name='edit_product'),
+    path('product/<int:product_id>/delete/', views.delete_product_view, name='delete_product'),
 ]
-
