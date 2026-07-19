@@ -17,5 +17,3 @@ urlpatterns = [
     path('product/<int:product_id>/edit/', views.edit_product_view, name='edit_product'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
