@@ -437,9 +437,21 @@ button[type="submit"]:active {
     padding: 15px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: not-allowed;
 }
 .detail-btn-edit {
-    flex: 1; background: #101B3D; color: #fff; border: none;
-    padding: 14px; border-radius: 8px; font-weight: 700; font-size: 15px;
-    text-align: center; text-decoration: none; display: block;
+    flex: 1;
+    background: #101B3D;
+    color: #fff;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    line-height: 1.4;
 }
 .detail-btn-edit:hover { background: #1a2c5c; }
 .detail-owner-note { font-size: 13px; color: #999; margin-bottom: 12px; }
@@ -526,11 +538,12 @@ button[type="submit"]:active {
     background: #fff;
     color: #D64545;
     border: 1.5px solid #F0C4C4;
-    padding: 14px;
-    border-radius: 8px;
+    padding: 9px 14px;
+    border-radius: 6px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
     width: 100%;
+    line-height: 1.4;
 }
 .detail-btn-delete:hover { background: #FDF2F2; border-color: #D64545; }
