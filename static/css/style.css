@@ -331,8 +331,18 @@ button[type="submit"]:active {
 .sell-photo-box {
     width:120px; height:120px; border:1.5px dashed #D5D9E3; border-radius:10px;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:8px; cursor:pointer; color:#888; font-size:12px; overflow:hidden; position:relative;
+    gap:6px; cursor:pointer; color:#888; font-size:12px; overflow:hidden; position:relative;
     background:#FAFBFD;
+    padding: 0;
+}
+.sell-photo-box svg {
+    width:26px; height:26px;
+    margin: 0;
+    display: block;
+}
+.sell-photo-box span {
+    line-height: 1;
+    margin: 0;
 }
 .sell-photo-box svg { width:26px; height:26px; }
 .sell-photo-box img { width:100%; height:100%; object-fit:cover; }
@@ -346,6 +356,23 @@ button[type="submit"]:active {
 .sell-field .form-select {
     width:100%; border:1px solid #E2E5EC; border-radius:8px; padding:12px 14px;
     font-size:14px; font-family:inherit; outline:none;
+    background-color: #fff;
+    -webkit-appearance: none;
+    appearance: none;
+    color: #333;
+}
+
+.sell-field .form-select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.sell-field .form-select option {
+    background-color: #fff;
+    color: #333;
 }
 .sell-field .form-textarea { resize:vertical; }
 
@@ -470,3 +497,40 @@ button[type="submit"]:active {
     font-size: 12px; color: #999;
 }
 .view-count svg { width: 14px; height: 14px; }
+
+/* 상품 상세 - 수정/삭제 버튼 */
+.detail-owner-actions {
+    display: flex;
+    gap: 10px;
+}
+.detail-btn-edit {
+    flex: 1;
+    background: #101B3D;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.detail-btn-edit:hover { background: #1a2c5c; }
+
+.detail-btn-delete {
+    flex: 1;
+    background: #fff;
+    color: #D64545;
+    border: 1.5px solid #F0C4C4;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100%;
+}
+.detail-btn-delete:hover { background: #FDF2F2; border-color: #D64545; }

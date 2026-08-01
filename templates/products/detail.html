@@ -45,17 +45,17 @@
                 <button class="detail-btn-sold" disabled>거래완료된 상품입니다</button>
             {% elif product.seller == user or user.is_staff %}
                 {% if product.seller == user %}
-                <p style="color:#999; margin-bottom:10px;">본인이 등록한 상품입니다.</p>
+                <p class="detail-owner-note">본인이 등록한 상품입니다.</p>
                 {% else %}
-                <p style="color:#999; margin-bottom:10px;">관리자 권한으로 접근 중입니다.</p>
+                <p class="detail-owner-note">관리자 권한으로 접근 중입니다.</p>
                 {% endif %}
-                <div style="display:flex; gap:10px;">
+                <div class="detail-owner-actions">
                     {% if product.seller == user %}
-                    <a href="{% url 'edit_product' product.id %}" class="detail-btn-edit" style="flex:1;">수정하기</a>
+                    <a href="{% url 'edit_product' product.id %}" class="detail-btn-edit">수정하기</a>
                     {% endif %}
                     <form method="post" action="{% url 'delete_product' product.id %}" style="flex:1;" onsubmit="return confirm('정말 삭제하시겠습니까?');">
                         {% csrf_token %}
-                        <button type="submit" style="width:100%; background:#fff; color:#D64545; border:1.5px solid #D64545; padding:14px; border-radius:8px; font-weight:700; font-size:15px; cursor:pointer;">삭제하기</button>
+                        <button type="submit" class="detail-btn-delete">삭제하기</button>
                     </form>
                 </div>
             {% else %}

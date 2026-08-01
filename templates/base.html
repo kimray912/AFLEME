@@ -44,9 +44,9 @@
 
     <div class="layout">
         <aside class="sidebar">
-           <a href="{% url 'home' %}" class="nav-item {% if not selected_category %}active{% endif %}">홈</a>
+           <a href="{% url 'home' %}" class="nav-item {% if request.path == '/' %}active{% endif %}">홈</a>
             {% for cat in global_categories %}
-            <a href="{% url 'category' cat.name %}" class="nav-item {% if selected_category == cat.name %}active{% endif %}">{{ cat.name }}</a>
+            <a href="{% url 'category' cat.name %}" class="nav-item {% if request.path == '/category/'|add:cat.name|add:'/' %}active{% endif %}">{{ cat.name }}</a>
             {% endfor %}
             <a href="{% url 'sell' %}" class="sell-btn">+ 상품 등록하기</a>
             <div class="footer-card">
