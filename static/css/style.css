@@ -502,7 +502,7 @@ button[type="submit"]:active {
     background: #101B3D !important;
     color: #fff;
     border: none;
-    padding: 9px 14px !important;
+    padding: 8px 14px !important;
     border-radius: 6px;
     font-weight: 700;
     font-size: 14px !important;
@@ -521,7 +521,7 @@ button[type="submit"]:active {
     background: #fff;
     color: #D64545;
     border: 1.5px solid #F0C4C4;
-    padding: 9px 14px !important;
+    padding: 8px 14px !important;
     border-radius: 6px;
     font-weight: 700;
     font-size: 14px !important;
