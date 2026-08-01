@@ -344,7 +344,6 @@ button[type="submit"]:active {
     line-height: 1;
     margin: 0;
 }
-.sell-photo-box svg { width:26px; height:26px; }
 .sell-photo-box img { width:100%; height:100%; object-fit:cover; }
 .sell-photo-box input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; }
 
