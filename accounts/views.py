@@ -13,6 +13,30 @@ def signup_view(request):
         password = request.POST['password']
         password_confirm = request.POST['password_confirm']
 
+        if not student_id.isdigit() or len(student_id) != 5:
+            messages.error(request, '학번은 5자리 숫자로 입력해주세요. (예: 30512)')
+            return redirect('signup')
+
+        grade = int(student_id[0])
+        class_num = int(student_id[1:3])
+        student_num = int(student_id[3:5])
+
+        if not (1 <= grade <= 3):
+            messages.error(request, '학년은 1~3 사이여야 합니다.')
+            return redirect('signup')
+
+        if not (1 <= class_num <= 10):
+            messages.error(request, '반은 01~10 사이여야 합니다.')
+            return redirect('signup')
+
+        if not (1 <= student_num <= 25):
+            messages.error(request, '번호는 01~25 사이여야 합니다.')
+            return redirect('signup')
+
+        if Profile.objects.filter(student_id=student_id).exists():
+            messages.error(request, '이미 등록된 학번입니다.')
+            return redirect('signup')
+
         if password != password_confirm:
             messages.error(request, '비밀번호가 일치하지 않습니다.')
             return redirect('signup')
@@ -27,7 +51,6 @@ def signup_view(request):
         return redirect('home')
 
     return render(request, 'accounts/signup.html')
-
 
 def login_view(request):
     if request.method == 'POST':
