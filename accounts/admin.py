@@ -34,3 +34,4 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Profile, ProfileAdmin)
+from django.db.models import Sum

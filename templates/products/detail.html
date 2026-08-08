@@ -43,6 +43,9 @@
         <div class="detail-actions">
             {% if product.is_sold %}
                 <button class="detail-btn-sold" disabled>거래완료된 상품입니다</button>
+                {% if product.buyer %}
+                <p style="font-size:12px; color:#999; margin-top:8px;">구매자: {{ product.buyer.username }}</p>
+                {% endif %}
             {% elif product.seller == user or user.is_staff %}
                 {% if product.seller == user %}
                 <p class="detail-owner-note">본인이 등록한 상품입니다.</p>
