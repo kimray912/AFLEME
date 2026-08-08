@@ -28,9 +28,8 @@ class ProfileAdmin(admin.ModelAdmin):
     get_purchased_count.short_description = '구매 수'
 
     def get_total_views(self, obj):
-        total = Product.objects.filter(seller=obj.user).aggregate(Sum('view_count'))['view_count__sum']
-        return total or 0
-    get_total_views.short_description = '상품 총 조회수'
+        return obj.views_made
+    get_total_views.short_description = '상품 조회 횟수'    
 
 
 admin.site.register(Profile, ProfileAdmin)

@@ -70,6 +70,11 @@ def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     product.view_count += 1
     product.save()
+
+    if product.seller != request.user:
+        request.user.profile.views_made += 1
+        request.user.profile.save()
+
     return render(request, 'products/detail.html', {'product': product})
 
 
