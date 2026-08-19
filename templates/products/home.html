@@ -34,6 +34,41 @@
     </a>
     {% endfor %}
 </div>
+{% if recommended_products %}
+<div class="section-title">최근 구매 항목에 맞춘 추천 상품이에요</div>
+<div class="product-grid">
+    {% for product in recommended_products %}
+    <a href="{% url 'product_detail' product.id %}" class="product-card">
+        <div class="thumb">
+            {% if product.category.name == "의류" %}
+                <span class="badge" style="background:#16234A;">{{ product.category.name }}</span>
+            {% elif product.category.name == "문구, 학용품" %}
+                <span class="badge" style="background:#6C4EA0;">{{ product.category.name }}</span>
+            {% elif product.category.name == "생활용품" %}
+                <span class="badge" style="background:#4B4B4B;">{{ product.category.name }}</span>
+            {% elif product.category.name == "악세사리" %}
+                <span class="badge" style="background:#B0473B;">{{ product.category.name }}</span>
+            {% elif product.category.name == "도서" %}
+                <span class="badge" style="background:#1F6F63;">{{ product.category.name }}</span>
+            {% elif product.category.name == "잡화" %}
+                <span class="badge" style="background:#3E8E4F;">{{ product.category.name }}</span>
+            {% else %}
+                <span class="badge" style="background:#888;">{{ product.category.name }}</span>
+            {% endif %}
+            {% if product.image %}<img src="{{ product.image.url }}">{% endif %}
+        </div>
+        <div class="info">
+            <div class="title">{{ product.title }}</div>
+            <div class="price">₩ {{ product.price }}</div>
+            <div class="view-count">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                {{ product.view_count }}
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endif %}
 
     <div class="section-title">
     {% if search_query %}

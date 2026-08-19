@@ -10,6 +10,15 @@ def home(request):
     products = Product.objects.all().order_by('is_sold', '-id')
     categories = Category.objects.all()
 
+    recommended_products = None
+    if request.user.is_authenticated:
+        last_purchase = Product.objects.filter(buyer=request.user).order_by('-id').first()
+        if last_purchase:
+            recommended_products = Product.objects.filter(
+                category=last_purchase.category,
+                is_sold=False
+            ).exclude(id=last_purchase.id)[:6]
+
     if request.user.is_authenticated:
         recent_notifications = Notification.objects.filter(user=request.user).order_by('-id')[:3]
         purchase_count = Product.objects.filter(buyer=request.user).count()
@@ -26,6 +35,7 @@ def home(request):
         'recent_notifications': recent_notifications,
         'purchase_count': purchase_count,
         'sale_count': sale_count,
+        'recommended_products': recommended_products,
     })
 
 
