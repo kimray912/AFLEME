@@ -5,7 +5,6 @@ from .models import Product, Category
 from notifications.models import Notification
 from .forms import ProductForm
 
-
 def home(request):
     products = Product.objects.all().order_by('is_sold', '-id')
     categories = Category.objects.all()
