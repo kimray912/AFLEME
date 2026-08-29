@@ -29,8 +29,10 @@ def signup_view(request):
             messages.error(request, '반은 01~10 사이여야 합니다.')
             return redirect('signup')
 
-        if not (1 <= student_num <= 25):
-            messages.error(request, '번호는 01~25 사이여야 합니다.')
+        max_student_num = 28 if grade == 1 else 25
+
+        if not (1 <= student_num <= max_student_num):
+            messages.error(request, f'번호는 01~{max_student_num:02d} 사이여야 합니다.')
             return redirect('signup')
 
         if Profile.objects.filter(student_id=student_id).exists():
